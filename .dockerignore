@@ -1,0 +1,12 @@
+
+.git
+.github
+.vscode
+.env
+node_modules
+venv
+.venv
+__pycache__
+docs
+k8s
+monitoring
