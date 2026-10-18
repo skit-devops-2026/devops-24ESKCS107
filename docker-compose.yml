@@ -1,0 +1,9 @@
+
+services:
+  fitforge:
+    build: .
+    image: fitforge:latest
+    container_name: fitforge
+    ports:
+      - "8080:80"
+    restart: unless-stopped
