@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fitforge-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fitforge
+  template:
+    metadata:
+      labels:
+        app: fitforge
+    spec:
+      containers:
+        - name: fitforge
+          image: devanshcodes07/fitforge:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          imagePullPolicy: IfNotPresent
