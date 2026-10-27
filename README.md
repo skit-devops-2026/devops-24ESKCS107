@@ -22,9 +22,9 @@ FitForge is a fitness tracking website that provides workout information and fit
 - **Monitoring:** Prometheus, Blackbox Exporter, Grafana
 - **Orchestration:** Kubernetes using Kind
 
-## Live Website
+## Live URL
 
-Visit FitForge: https://fit-forge-ar7z.onrender.com
+Live URL: https://fit-forge-ar7z.onrender.com
 
 ## Docker
 
