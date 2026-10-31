@@ -1,14 +1,16 @@
 import "../assets/Progress.css";
 import { useEffect, useState } from "react";
-import { getWorkoutHistory } from "../utils/workoutData";
-import "../assets/Progress.css";
+import { getWorkouts } from "../utils/api";
+
 
 function Progress() {
   const [workouts, setWorkouts] = useState([]);
 
-  useEffect(() => {
-    setWorkouts(getWorkoutHistory());
-  }, []);
+ useEffect(() => {
+  getWorkouts()
+    .then(data => setWorkouts(data))
+    .catch(error => console.error("Progress error:", error));
+}, []);
 
   const totalWorkouts = workouts.length;
 
@@ -124,7 +126,7 @@ function Progress() {
             <p>No workout data yet. Complete a workout to track progress.</p>
           ) : (
             workouts.slice(0, 5).map((workout) => (
-              <div key={workout.id}>
+              <div key={workout._id}>
                 <strong>{workout.name}</strong>
                 <p>{workout.duration} min · {workout.calories} kcal</p>
               </div>

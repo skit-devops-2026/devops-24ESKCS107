@@ -1,13 +1,15 @@
 import "../../public/legacy/Dashboard.css";
 import { useState, useEffect } from "react";
-import { getWorkoutHistory } from "../utils/workoutData";
+import { getWorkouts } from "../utils/api";
 
 function Dashboard() {
   const [workouts, setWorkouts] = useState([]);
 
-  useEffect(() => {
-    setWorkouts(getWorkoutHistory());
-  }, []);
+ useEffect(() => {
+  getWorkouts()
+    .then(data => setWorkouts(data))
+    .catch(error => console.error("Dashboard error:", error));
+}, []);
 
   const today = new Date().toDateString();
 
@@ -76,7 +78,7 @@ function Dashboard() {
               <p>No completed workouts yet. Start your first workout!</p>
             ) : (
               workouts.slice(0, 5).map((workout) => (
-                <div key={workout.id}>
+                <div key={workout._id}>
                   <span>{workout.name}</span>
                   <span>
                     {workout.duration} min · {workout.calories} kcal
