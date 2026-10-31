@@ -1,0 +1,195 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0F172A;
+    color:#F8FAFC;
+}
+
+
+
+
+header{
+    background:#111827;
+    padding:18px 5%;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#22C55E;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#E5E7EB;
+    text-decoration:none;
+}
+
+nav a:hover{
+    color:#22C55E;
+}
+
+
+
+
+.heading{
+    text-align:center;
+    padding:60px 20px 40px;
+}
+
+.heading h1{
+    font-size:40px;
+}
+
+.heading p{
+    color:#94A3B8;
+    margin-top:10px;
+}
+
+
+
+.section{
+    width:90%;
+    max-width:1000px;
+    margin:40px auto;
+    text-align:center;
+}
+
+.section h2{
+    margin-bottom:25px;
+}
+
+
+
+.categories{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+.card{
+    background:#111827;
+    width:30%;
+    padding:25px;
+    border-radius:15px;
+}
+
+.card i{
+    color:#22C55E;
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#94A3B8;
+}
+
+
+
+
+.choose-workout{
+    background:#111827;
+    max-width:500px;
+    margin:auto;
+    padding:30px;
+    border-radius:15px;
+    text-align:left;
+}
+
+.choose-workout label{
+    display:block;
+    margin:15px 0 8px;
+}
+
+.choose-workout select,
+.choose-workout input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#334155;
+    color:white;
+}
+
+.choose-workout .btn{
+    display:block;
+    width:max-content;
+    margin:25px auto 0;
+}
+
+
+
+
+.btn{
+    display:inline-block;
+    background:#22C55E;
+    color:white;
+    padding:10px 20px;
+    border-radius:20px;
+    text-decoration:none;
+}
+
+
+
+
+footer{
+    text-align:center;
+    background:#111827;
+    color:#94A3B8;
+    padding:20px;
+    margin-top:60px;
+}
+
+
+
+
+@media(max-width:700px){
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .categories{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .card{
+        width:100%;
+    }
+
+    .workouts{
+        grid-template-columns:1fr;
+    }
+
+    .heading h1{
+        font-size:32px;
+    }
+}
