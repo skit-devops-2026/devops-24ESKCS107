@@ -1,0 +1,321 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0F172A;
+    color:#F8FAFC;
+}
+
+.container {
+    width: 92%;             
+    max-width: 1600px;       
+    margin: 0 auto;
+}
+
+
+/* Navbar */
+
+header{
+    background:#111827;
+    padding:20px 0;
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#22C55E;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#E5E7EB;
+    text-decoration:none;
+}
+
+nav a:hover,
+.footer a:hover{
+    color:#22C55E;
+}
+
+.btn{
+    background:#22C55E;
+    color:white;
+    padding:12px 22px;
+    border-radius:25px;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.btn:hover{
+    background:#16A34A;
+}
+
+/* Hero */
+
+.hero{
+   
+    height: 100vh; 
+    
+    display:flex;
+    align-items:center;
+    padding-left: 60px;
+
+    background:
+    linear-gradient(to right,rgba(15,23,42,.85),rgba(15,23,42,.3)),
+    url("images/fitness.jpg") center/cover;
+}
+
+
+
+.hero-content{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.hero h1{
+    font-size:55px;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:#22C55E;
+}
+
+.hero p{
+    color:#CBD5E1;
+    font-size:18px;
+    max-width:550px;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.outline{
+    color:#22C55E;
+    border:2px solid #22C55E;
+    padding:10px 20px;
+    border-radius:25px;
+    text-decoration:none;
+}
+
+
+/* Sections */
+
+.section {
+    width: 92%;             
+    max-width: 1600px;      
+    margin: 70px auto;
+    text-align: center;
+}
+
+.section h2{
+    font-size:32px;
+}
+
+.section > p{
+    color:#94A3B8;
+    margin:10px 0 35px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    background:#111827;
+    padding:30px 20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.card i{
+    color:#22C55E;
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#94A3B8;
+    line-height:1.6;
+}
+
+
+/* Cards */
+
+.cards {
+    display: grid;
+    
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;              
+}
+
+.card{
+    background:#111827;
+    padding:30px 20px;
+    border-radius:15px;
+}
+
+.card i{
+    color:#22C55E;
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#94A3B8;
+}
+
+.card a{
+    color:#22C55E;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:15px;
+}
+
+
+/* Statistics */
+
+.stats{
+    background:#111827;
+    text-align:center;
+    padding:55px 5%;
+}
+
+.stats-box{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    margin-top:35px;
+}
+
+.stats h3{
+    color:#22C55E;
+    font-size:35px;
+}
+
+.stats p{
+    color:#94A3B8;
+}
+
+
+/* CTA */
+
+.cta{
+    text-align:center;
+    background:#1E293B;
+    width:90%;
+    max-width:1000px;
+    margin:70px auto;
+    padding:50px 20px;
+    border-radius:20px;
+}
+
+.cta p{
+    color:#CBD5E1;
+    margin:15px 0 25px;
+}
+
+
+/* Footer */
+
+footer{
+    background:#111827;
+    padding-top:50px;
+}
+
+.footer{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+}
+
+.footer h2,
+.footer h3{
+    color:#22C55E;
+    margin-bottom:15px;
+}
+
+.footer p,
+.footer a{
+    color:#94A3B8;
+}
+
+.footer a{
+    display:block;
+    text-decoration:none;
+    margin-bottom:10px;
+}
+
+.social a{
+    display:inline-block;
+    background:#1E293B;
+    padding:10px;
+    border-radius:50%;
+    margin-right:5px;
+}
+
+.copyright{
+    text-align:center;
+    color:#94A3B8;
+    border-top:1px solid #334155;
+    padding:20px;
+    margin-top:40px;
+}
+
+
+
+@media(max-width:900px){
+
+    .navbar,
+    nav{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stats-box,
+    .footer{
+        grid-template-columns:1fr 1fr;
+        gap:25px;
+    }
+}
