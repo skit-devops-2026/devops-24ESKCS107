@@ -1,16 +1,14 @@
+
 import "../../public/legacy/Workout.css";
 import { useState, useEffect } from "react";
-import {
-  workoutOptions,
-  saveWorkout,
-  calculateCalories
-} from "../utils/workoutData";
+import { addWorkout } from "../utils/api";
+import { workoutOptions } from "../utils/workoutData";
 
 function Workout() {
-  const [selected, setSelected] = useState("Push Ups");
+  const [selected, setSelected] = useState(workoutOptions[0].name);
   const [sets, setSets] = useState(3);
   const [reps, setReps] = useState(10);
-  const [weight, setWeight] = useState(70);
+  const [weight, setWeight] = useState(60);
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
   const [message, setMessage] = useState("");
@@ -36,31 +34,36 @@ function Workout() {
     setRunning(true);
   }
 
-  function finishWorkout() {
+  async function finishWorkout() {
     if (!running) return;
 
-    const workout = workoutOptions.find(
+    const duration = Math.max(1, Math.round(seconds / 60));
+
+    const selectedWorkout = workoutOptions.find(
       (item) => item.name === selected
     );
 
-    const duration = Math.max(1, Math.round(seconds / 60));
-    const calories = calculateCalories(workout.met, weight, duration);
+    try {
+      const savedWorkout = await addWorkout({
+        name: selected,
+        met: selectedWorkout.met,
+        category: selectedWorkout.category,
+        weight: Number(weight),
+        sets: Number(sets),
+        reps: Number(reps),
+        duration,
+        date: new Date().toISOString()
+      });
 
-    saveWorkout({
-      id: Date.now(),
-      name: selected,
-      sets: Number(sets),
-      reps: Number(reps),
-      duration,
-      calories,
-      date: new Date().toISOString()
-    });
-
-    setRunning(false);
-    setMessage(
-      `${selected} completed! Estimated ${calories} calories burned.`
-    );
-    setSeconds(0);
+      setRunning(false);
+      setMessage(
+        `${selected} completed! Estimated ${savedWorkout.calories} calories burned.`
+      );
+      setSeconds(0);
+    } catch (error) {
+      setMessage("Could not save workout. Please try again.");
+      console.error(error);
+    }
   }
 
   const minutes = Math.floor(seconds / 60);
@@ -69,20 +72,20 @@ function Workout() {
   return (
     <>
       <header>
-  <div className="navbar">
-    <div className="logo">
-      <i className="fa-solid fa-dumbbell"></i>
-      FitForge
-    </div>
+        <div className="navbar">
+          <div className="logo">
+            <i className="fa-solid fa-dumbbell"></i>
+            FitForge
+          </div>
 
-    <nav>
-      <a href="/">Home</a>
-      <a href="/dashboard">Dashboard</a>
-      <a href="/workouts">Workouts</a>
-      <a href="/progress">Progress</a>
-    </nav>
-  </div>
-</header>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/workouts">Workouts</a>
+            <a href="/progress">Progress</a>
+          </nav>
+        </div>
+      </header>
 
       <main>
         <section className="section">
