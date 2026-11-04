@@ -1,4 +1,4 @@
-
+import Navbar from "../components/Navbar";
 import "../../public/legacy/Workout.css";
 import { useState, useEffect } from "react";
 import {
@@ -108,21 +108,7 @@ function Workout() {
 
   return (
     <>
-      <header>
-        <div className="navbar">
-          <div className="logo">
-            <i className="fa-solid fa-dumbbell"></i>
-            FitForge
-          </div>
-
-          <nav>
-            <a href="/">Home</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/workouts">Workouts</a>
-            <a href="/progress">Progress</a>
-          </nav>
-        </div>
-      </header>
+      <Navbar />
 
       <main>
         <section className="section">

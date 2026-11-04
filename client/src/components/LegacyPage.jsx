@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,11 +9,17 @@ function LegacyPage({ file, css }) {
   useEffect(() => {
     fetch(`/legacy/${file}`)
       .then((response) => {
-        if (!response.ok) throw new Error("Page not found");
+        if (!response.ok) {
+          throw new Error("Page not found");
+        }
+
         return response.text();
       })
       .then((html) => {
-        const doc = new DOMParser().parseFromString(html, "text/html");
+        const doc = new DOMParser().parseFromString(
+          html,
+          "text/html"
+        );
 
         let body = doc.body.innerHTML;
 
@@ -37,6 +42,7 @@ function LegacyPage({ file, css }) {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = `/legacy/${css}`;
+
     document.head.appendChild(link);
 
     return () => link.remove();
@@ -44,16 +50,20 @@ function LegacyPage({ file, css }) {
 
   function handleClick(event) {
     const anchor = event.target.closest("a");
+
     if (!anchor) return;
+
+    const href = anchor.getAttribute("href");
 
     const routes = {
       "Home.html": "/",
       "Dashboard.html": "/dashboard",
       "Workout.html": "/workouts",
-      "Progress.html": "/progress"
+      "Progress.html": "/progress",
+      "/login": "/login",
+      "/signup": "/signup",
+      "/workouts": "/workouts"
     };
-
-    const href = anchor.getAttribute("href");
 
     if (routes[href]) {
       event.preventDefault();
