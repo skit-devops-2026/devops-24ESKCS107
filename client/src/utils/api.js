@@ -1,39 +1,57 @@
 const API_URL = "http://localhost:5000/api";
 
-export async function getWorkouts() {
-  const response = await fetch(`${API_URL}/workouts`);
+async function request(url, options = {}) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}${url}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options.headers
+    }
+  });
+
+  const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error("Failed to fetch workouts");
+    throw new Error(data.message || "Something went wrong.");
   }
 
-  return response.json();
+  return data;
 }
 
-export async function addWorkout(workout) {
-  const response = await fetch(`${API_URL}/workouts`, {
+export function signupUser(name, email, password) {
+  return request("/auth/signup", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    body: JSON.stringify({ name, email, password })
+  });
+}
+
+export function loginUser(email, password) {
+  return request("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password })
+  });
+}
+
+export function getCurrentUser() {
+  return request("/auth/me");
+}
+
+export function getWorkouts() {
+  return request("/workouts");
+}
+
+export function addWorkout(workout) {
+  return request("/workouts", {
+    method: "POST",
     body: JSON.stringify(workout)
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to save workout");
-  }
-
-  return response.json();
 }
 
-export async function deleteWorkout(id) {
-  const response = await fetch(`${API_URL}/workouts/${id}`, {
+export function deleteWorkout(id) {
+  return request(`/workouts/${id}`, {
     method: "DELETE"
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to delete workout");
-  }
-
-  return response.json();
 }
