@@ -319,3 +319,20 @@ footer{
         gap:25px;
     }
 }
+
+.home-auth {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.home-auth .outline {
+    display: inline-block;
+}
+
+@media (max-width: 900px) {
+    .home-auth {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}

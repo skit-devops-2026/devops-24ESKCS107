@@ -1,6 +1,7 @@
 import "../../public/legacy/Dashboard.css";
 import { useState, useEffect } from "react";
 import { getWorkouts } from "../utils/api";
+import Navbar from "../components/Navbar";
 
 function Dashboard() {
   const [workouts, setWorkouts] = useState([]);
@@ -27,21 +28,7 @@ function Dashboard() {
 
   return (
     <>
-      <header>
-  <div className="navbar">
-    <div className="logo">
-      <i className="fa-solid fa-dumbbell"></i>
-      FitForge
-    </div>
-
-    <nav>
-      <a href="/">Home</a>
-      <a href="/dashboard">Dashboard</a>
-      <a href="/workouts">Workouts</a>
-      <a href="/progress">Progress</a>
-    </nav>
-  </div>
-</header>
+      <Navbar />
 
       <main>
         <section className="section">

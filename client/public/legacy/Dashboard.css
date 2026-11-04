@@ -188,3 +188,37 @@ footer{
     }
 
 }
+
+.auth-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.auth-nav span {
+  color: #E5E7EB;
+}
+
+.auth-nav button {
+  background: #22C55E;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.auth-nav button:hover {
+  background: #16A34A;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .auth-nav {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
