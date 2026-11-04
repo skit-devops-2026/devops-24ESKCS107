@@ -1,7 +1,11 @@
 
 import "../../public/legacy/Workout.css";
 import { useState, useEffect } from "react";
-import { addWorkout } from "../utils/api";
+import {
+  getWorkouts,
+  addWorkout,
+  deleteWorkout
+} from "../utils/api";
 import { workoutOptions } from "../utils/workoutData";
 
 function Workout() {
@@ -12,6 +16,20 @@ function Workout() {
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
   const [message, setMessage] = useState("");
+  const [workouts, setWorkouts] = useState([]);
+
+  async function loadWorkouts() {
+    try {
+      const data = await getWorkouts();
+      setWorkouts(data);
+    } catch (error) {
+      console.error("Workout history error:", error);
+    }
+  }
+
+  useEffect(() => {
+    loadWorkouts();
+  }, []);
 
   useEffect(() => {
     if (!running) return;
@@ -60,8 +78,27 @@ function Workout() {
         `${selected} completed! Estimated ${savedWorkout.calories} calories burned.`
       );
       setSeconds(0);
+
+      await loadWorkouts();
     } catch (error) {
       setMessage("Could not save workout. Please try again.");
+      console.error(error);
+    }
+  }
+
+  async function handleDelete(id) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this workout?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteWorkout(id);
+      setMessage("Workout deleted successfully!");
+      await loadWorkouts();
+    } catch (error) {
+      setMessage("Could not delete workout. Please try again.");
       console.error(error);
     }
   }
@@ -90,6 +127,7 @@ function Workout() {
       <main>
         <section className="section">
           <h2>Workout Categories</h2>
+
           <div className="cards">
             <div className="card"><h3>Strength</h3></div>
             <div className="card"><h3>Cardio</h3></div>
@@ -157,6 +195,56 @@ function Workout() {
 
             {message && <p>{message}</p>}
           </div>
+        </section>
+
+        <section className="section history-section">
+          <h2>Workout History</h2>
+
+          {workouts.length === 0 ? (
+            <p>No workout history available.</p>
+          ) : (
+            <div className="workouts">
+              {workouts.map((workout) => (
+                <div className="card workout-card" key={workout._id}>
+                  <div className="workout-name">
+                    <h3>{workout.name}</h3>
+                    <span>
+                      {new Date(workout.date).toLocaleDateString()}
+                    </span>
+                  </div>
+
+                  <div className="workout-details">
+                    <div>
+                      <small>Sets</small>
+                      <strong>{workout.sets}</strong>
+                    </div>
+
+                    <div>
+                      <small>Reps</small>
+                      <strong>{workout.reps}</strong>
+                    </div>
+
+                    <div>
+                      <small>Duration</small>
+                      <strong>{workout.duration} min</strong>
+                    </div>
+
+                    <div>
+                      <small>Calories</small>
+                      <strong>{workout.calories} kcal</strong>
+                    </div>
+                  </div>
+
+                  <button
+                    className="btn delete-btn"
+                    onClick={() => handleDelete(workout._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </main>
 

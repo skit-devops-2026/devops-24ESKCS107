@@ -1,58 +1,56 @@
-import "../assets/Progress.css";
-import { useEffect, useState } from "react";
-import { getWorkouts } from "../utils/api";
 
+import "../../public/legacy/Progress.css";
+import { useState, useEffect } from "react";
+import { getWorkouts } from "../utils/api";
 
 function Progress() {
   const [workouts, setWorkouts] = useState([]);
 
- useEffect(() => {
-  getWorkouts()
-    .then(data => setWorkouts(data))
-    .catch(error => console.error("Progress error:", error));
-}, []);
+  useEffect(() => {
+    getWorkouts()
+      .then((data) => setWorkouts(data))
+      .catch((error) => console.error("Progress error:", error));
+  }, []);
 
   const totalWorkouts = workouts.length;
 
   const totalDuration = workouts.reduce(
-    (total, workout) => total + workout.duration, 0
+    (total, workout) => total + workout.duration,
+    0
   );
 
   const totalCalories = workouts.reduce(
-    (total, workout) => total + workout.calories, 0
-  );
-
-  const now = new Date();
-  const startOfWeek = new Date(now);
-  startOfWeek.setHours(0, 0, 0, 0);
-  startOfWeek.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-
-  const weeklyWorkouts = workouts.filter(
-    (workout) => new Date(workout.date) >= startOfWeek
-  );
-
-  const weeklyGoal = 6;
-  const weeklyPercentage = Math.min(
-    100,
-    Math.round((weeklyWorkouts.length / weeklyGoal) * 100)
+    (total, workout) => total + workout.calories,
+    0
   );
 
   const days = [
-    "Monday", "Tuesday", "Wednesday", "Thursday",
-    "Friday", "Saturday", "Sunday"
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
   ];
 
-  const dailyProgress = days.map((day, index) => {
-    const dayDate = new Date(startOfWeek);
-    dayDate.setDate(startOfWeek.getDate() + index);
+  const weeklyData = days.map((day) => {
+    const dayWorkouts = workouts.filter(
+      (workout) => new Date(workout.date).getDay() === days.indexOf(day)
+    );
 
-    const count = weeklyWorkouts.filter(
-      (workout) =>
-        new Date(workout.date).toDateString() === dayDate.toDateString()
-    ).length;
+    const duration = dayWorkouts.reduce(
+      (total, workout) => total + workout.duration,
+      0
+    );
 
-    return { day, count, percentage: Math.min(100, count * 50) };
+    return { day, duration };
   });
+
+  const maxDuration = Math.max(
+    ...weeklyData.map((item) => item.duration),
+    1
+  );
 
   return (
     <>
@@ -62,6 +60,7 @@ function Progress() {
             <i className="fa-solid fa-dumbbell"></i>
             FitForge
           </div>
+
           <nav>
             <a href="/">Home</a>
             <a href="/dashboard">Dashboard</a>
@@ -98,40 +97,24 @@ function Progress() {
 
         <section className="section">
           <h2>Weekly Progress</h2>
-          <p>Weekly Goal: {weeklyWorkouts.length} / {weeklyGoal} workouts</p>
-
-          <div className="bar">
-            <div style={{ width: `${weeklyPercentage}%` }}></div>
-          </div>
-
-          <p>{weeklyPercentage}% completed</p>
 
           <div className="weekly">
-            {dailyProgress.map((item) => (
-              <div key={item.day}>
-                <span>{item.day}</span>
-                <div className="bar">
-                  <div style={{ width: `${item.percentage}%` }}></div>
+            {weeklyData.map((item) => {
+              const percentage = Math.round(
+                (item.duration / maxDuration) * 100
+              );
+
+              return (
+                <div key={item.day}>
+                  <span>{item.day}</span>
+                  <div className="bar">
+                    <div style={{ width: `${percentage}%` }}></div>
+                  </div>
+                  <small>{percentage}%</small>
                 </div>
-                <small>{item.count} workouts</small>
-              </div>
-            ))}
+              );
+            })}
           </div>
-        </section>
-
-        <section className="section">
-          <h2>Recent Activity</h2>
-
-          {workouts.length === 0 ? (
-            <p>No workout data yet. Complete a workout to track progress.</p>
-          ) : (
-            workouts.slice(0, 5).map((workout) => (
-              <div key={workout._id}>
-                <strong>{workout.name}</strong>
-                <p>{workout.duration} min · {workout.calories} kcal</p>
-              </div>
-            ))
-          )}
         </section>
       </main>
 
